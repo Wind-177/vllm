@@ -93,7 +93,7 @@ class ECExampleConnector(ECConnectorBase):
         # A bare "cuda" makes safetensors load onto cuda:0. Pin the load to the
         # selected device so tensor-parallel workers load the cache locally.
         device = current_platform.device_type
-        if current_platform.is_cuda_alike():
+        if current_platform.is_cuda_alike() or device == "npu":
             device = f"{device}:{current_platform.current_device()}"
         # Load the EC for each mm data
         for mm_data in metadata.mm_datas:
